@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -35,9 +34,6 @@ gem 'open_uri_redirections'
 #Rendering JSON
 gem 'jbuilder', '~> 2.0'
 
-#Postgres
-gem 'pg'
-
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
@@ -49,4 +45,9 @@ group :development do
   gem 'pry-nav'
   gem 'better_errors',              '~> 1.1.0'
   gem 'quiet_assets',               '~> 1.0.2'
+end
+
+group :production do
+  gem 'pg',                         '~> 0.17.1'
+  gem 'rails_12factor',             '~> 0.0.2'
 end
