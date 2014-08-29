@@ -102,8 +102,11 @@ def icon_175_for_appstore_url(appstore_url)
 			doc = Nokogiri::HTML(page)
 			if (doc.css("img.artwork").first)
 				app_icon_175 = doc.css("img.artwork").first
-				if (app_icon_175["src-swap"])
+				if (app_icon_175["width"] == "175")
 					app_icon_175_url = app_icon_175["src-swap"]
+				else
+				app_icon_175 = doc.css("img.artwork").last
+				app_icon_175_url = app_icon_175["src-swap"]
 				end
 			end
 		end
