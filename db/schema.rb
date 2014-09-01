@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140824190240) do
+ActiveRecord::Schema.define(version: 20140901002544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140824190240) do
     t.string   "appstore_url_array",  default: [], array: true
     t.string   "name"
     t.integer  "ph_id"
-    t.string   "tagline"
+    t.text     "tagline"
     t.string   "appstore_identifier"
     t.string   "icon_url"
     t.string   "appstore_url"

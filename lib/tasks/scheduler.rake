@@ -27,9 +27,9 @@ task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 		data = JSON.parse(response)
 		case response.code
 		when 200
-			puts "Get Request to the PH API is sucessful"
+			puts "Get Request to the PH API is successful"
 			count_posts = data['posts'].count
-			puts "There are #{count_posts} products this day"
+			puts "There are #{count_posts} products for this day"
 			nb_of_products = nb_of_products + count_posts
 			data['posts'].each do |post|
 				redirect_url = post['redirect_url']	
