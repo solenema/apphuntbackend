@@ -41,6 +41,7 @@ task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 					base_url = response.base_uri
 					doc = Nokogiri::HTML(response)
 					if base_url.to_s.match('itunes.apple')
+						
 						app = App.find_by_ph_id(post['id'])
 						app ||= App.new
 						app.name = post['name']
