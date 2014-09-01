@@ -14,6 +14,8 @@ PH_ACCEPT_HEADER = 'application/json'
 desc "This task is called by the Heroku scheduler add-on"
 task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 	days_ago = args.day_1.to_i
+	nb_of_products = 0
+	nb_of_apps = 0
 	while (days_ago >= args.day_2.to_i) do
 		puts "Collecting apps #{days_ago} days ago"
 		api_url = get_posts_url
@@ -28,6 +30,7 @@ task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 			puts "Get Request to the PH API is sucessful"
 			count_posts = data['posts'].count
 			puts "There are #{count_posts} products this day"
+			nb_of_products = nb_of_products + count_posts
 			data['posts'].each do |post|
 				redirect_url = post['redirect_url']	
 				begin
@@ -54,6 +57,7 @@ task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 						end
 						app.save
 						puts "Save App #{app.name} with appstore URL = #{app.appstore_url} / case 2"
+						nb_of_apps = nb_of_apps + 1 
 					else
 						appstore_url_array = []
 						doc.css("a").each do |link|
@@ -81,6 +85,7 @@ task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 								puts "no icon_url because no appstore_url"
 							end
 							app.save
+							nb_of_apps = nb_of_apps + 1 
 							puts "Save App #{app.name} with appstore URL = #{app.appstore_url} / case 2"
 						end
 					end
@@ -92,7 +97,7 @@ task :collect_apps_from_ph_between, [:day_1, :day_2] => :environment do |t,args|
 		end
 		days_ago -= 1
 	end
-
+	puts "Retrieve #{nb_of_apps} apps for #{nb_of_products} products"
 end
 
 def icon_175_for_appstore_url(appstore_url)
@@ -114,6 +119,12 @@ def icon_175_for_appstore_url(appstore_url)
 		puts "Error whene loading icon for #{appstore_url}"
 	end
 	return app_icon_175_url
+end
+
+
+def category_for_appstore_url(appstore_url)
+
+
 end
 
 def https_protocol
